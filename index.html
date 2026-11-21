@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do You Love Me? ❤️</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg,#ffd1dc,#ff8fab,#ffc2d1);
+    font-family: Arial,sans-serif;
+    overflow: hidden;
+}
+
+.container {
+    width: 90%;
+    max-width: 420px;
+    background: white;
+    padding: 35px 20px;
+    border-radius: 28px;
+    text-align: center;
+    box-shadow: 0 15px 45px #d6338460;
+    position: relative;
+    z-index: 2;
+}
+
+.avatar {
+    font-size: 85px;
+    margin-bottom: 15px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    50% { transform: translateY(-9px); }
+}
+
+h1 {
+    color: #e84375;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+#message {
+    color: #777;
+    font-size: 17px;
+    line-height: 1.6;
+    min-height: 55px;
+    margin-bottom: 25px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    min-height: 55px;
+}
+
+button {
+    min-width: 115px;
+    padding: 14px 22px;
+    border: none;
+    border-radius: 30px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#yes {
+    background: #ff4081;
+    color: white;
+    box-shadow: 0 5px 15px #ffc0cb;
+    transition: transform .2s;
+}
+
+#yes:hover {
+    transform: scale(1.12);
+}
+
+#no {
+    background: #777;
+    color: white;
+    position: relative;
+    z-index: 5;
+}
+
+#result {
+    display: none;
+    color: #e84375;
+    font-size: 21px;
+    line-height: 1.7;
+    margin-top: 20px;
+}
+
+.heart {
+    position: fixed;
+    bottom: -30px;
+    pointer-events: none;
+    animation: float 5s linear forwards;
+    z-index: 1;
+}
+
+@keyframes float {
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.small {
+    color: #aaa;
+    font-size: 12px;
+    margin-top: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="avatar" id="avatar">🥰</div>
+
+    <h1 id="heading">Hey Pretty Girl! 💗</h1>
+
+    <p id="message">
+        I've got one important question for you...
+        Think carefully! 🙈
+        <br><br>
+        Do you love me? 🥺❤️
+    </p>
+
+    <div class="buttons" id="buttons">
+        <button id="yes">YES ❤️</button>
+        <button id="no">NO 😭</button>
+    </div>
+
+    <div id="result"></div>
+
+    <div class="small" id="footer">
+        Be honest... I'm watching! 👀😂
+    </div>
+
+</div>
+
+<script>
+
+const no = document.getElementById("no");
+const yes = document.getElementById("yes");
+const message = document.getElementById("message");
+const avatar = document.getElementById("avatar");
+
+const flirtyLines = [
+    "Oho! Trying to break my heart? 🥺",
+    "Sorry! NO is currently unavailable! 😂",
+    "Even the NO button wants you to say YES! 🙈",
+    "Are you sure, pretty girl? Think again! 😏",
+    "My heart just skipped a beat! 😭❤️",
+    "Nice try! But you can't escape this question! 😂",
+    "Plot twist: The NO button is on my side! 😎",
+    "Stop chasing NO and choose happiness! 💗",
+    "I think your smile already said YES! 😍",
+    "Warning! One YES can make someone's day! 💌"
+];
+
+let attempts = 0;
+
+function runAway() {
+
+    const padding = 10;
+
+    const maxX = window.innerWidth - no.offsetWidth - padding;
+    const maxY = window.innerHeight - no.offsetHeight - padding;
+
+    const x = padding + Math.random() * (maxX - padding);
+    const y = padding + Math.random() * (maxY - padding);
+
+    no.style.position = "fixed";
+    no.style.left = x + "px";
+    no.style.top = y + "px";
+
+    message.innerText =
+        flirtyLines[attempts % flirtyLines.length];
+
+    avatar.innerText =
+        ["😂","🥺","🙈","😏","😭","🤭"][attempts % 6];
+
+    attempts++;
+}
+
+// NO button runs away on mouse hover and touch
+no.addEventListener("mouseenter", runAway);
+
+no.addEventListener("touchstart", function(e) {
+    e.preventDefault();
+    runAway();
+}, {passive: false});
+
+// YES button works normally
+yes.addEventListener("click", function() {
+
+    document.getElementById("heading").innerText =
+        "I KNEW IT! 😍❤️";
+
+    message.style.display = "none";
+
+    document.getElementById("buttons").style.display = "none";
+
+    no.style.display = "none";
+
+    avatar.innerText = "🥰";
+
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("result").innerHTML =
+        "YAYYYYY! 🥹💕<br><br>" +
+        "You just made someone smile! ❤️<br><br>" +
+        "Officially confirmed:<br>" +
+        "You're cute: 100/10 😍<br>" +
+        "Your smile: Dangerous! 🦋<br>" +
+        "Your attitude: Unmatched! 😎<br><br>" +
+        "Sending unlimited hugs! 🤗💗";
+
+    document.getElementById("footer").innerText =
+        "P.S. Someone is smiling right now! 😉";
+
+    for(let i = 0; i < 40; i++) {
+        setTimeout(createHeart, i * 100);
+    }
+
+});
+
+function createHeart() {
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart";
+
+    heart.innerText =
+        ["❤️","💕","💗","💖","✨","🌸"][
+            Math.floor(Math.random() * 6)
+        ];
+
+    heart.style.left = Math.random() * 100 + "vw";
+
+    heart.style.fontSize =
+        (18 + Math.random() * 20) + "px";
+
+    heart.style.animationDuration =
+        (3 + Math.random() * 3) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+
+</script>
+
+</body>
+</html>
